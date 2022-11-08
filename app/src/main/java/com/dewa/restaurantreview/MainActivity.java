@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.bumptech.glide.Glide;
 import com.dewa.restaurantreview.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.isLoading().observe(this, isLoading -> {
             showLoading(isLoading);
+        });
+
+        mainViewModel.snackbarText().observe(this, text -> {
+            String snackBarText = text.getContentIfNotHandled();
+            if (snackBarText != null) {
+                Snackbar.make(
+                        getWindow().getDecorView().getRootView(),
+                        snackBarText,
+                        Snackbar.LENGTH_SHORT
+                ).show();
+            }
         });
 
         binding.btnSend.setOnClickListener(view -> {

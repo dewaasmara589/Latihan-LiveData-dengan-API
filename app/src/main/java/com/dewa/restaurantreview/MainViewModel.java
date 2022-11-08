@@ -31,6 +31,11 @@ public class MainViewModel extends ViewModel {
         return _isLoading;
     }
 
+    private final MutableLiveData<Event<String>> _snackbarText = new MutableLiveData<>();
+    public LiveData<Event<String>> snackbarText() {
+        return _snackbarText;
+    }
+
     private static final String TAG = "MainViewModel";
     private static final String RESTAURANT_ID = "uewq1zg2zlskfw1e867";
 
@@ -75,6 +80,7 @@ public class MainViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         _listReview.setValue(response.body().getCustomerReviews());
+                        _snackbarText.setValue(new Event(response.body().getMessage()));
                     }
                 } else {
                     if (response.body() != null) {
